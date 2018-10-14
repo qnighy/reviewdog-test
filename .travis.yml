@@ -13,7 +13,7 @@ install:
   - curl -fSL https://github.com/haya14busa/reviewdog/releases/download/0.9.11/reviewdog_linux_amd64 -o ~/bin/reviewdog
   - chmod +x ~/bin/reviewdog
   - rustup component add clippy-preview
-  - cargo install --git https://github.com/qnighy/clippy-reviewdog-filter.git --rev 6670c1d
+  - cargo install --git https://github.com/qnighy/clippy-reviewdog-filter.git --rev b74c65c
 script:
   - reviewdog -reporter=github-pr-review
   - cargo test --locked --all
