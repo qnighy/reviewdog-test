@@ -1,0 +1,19 @@
+sudo: false
+dist: trusty
+language: rust
+rust:
+  - stable
+env:
+  global:
+      # REVIEWDOG_GITHUB_API_TOKEN
+    - secure: "KtN+YKINFZmgewSkX/mdVeXl477Gxvzsp6Q8o3qI/EPSceZrPR5FKQQ+jnCfiywRQbPsKLVOpTbky6KWTQydA0vQ4woigtlQYsFqRT567wZ7hS4oTEcsSuv2KmAnKJgMYjFy9u0KWvu+NmIdeHPO2UHPl8hWWr+tjrnGCC1ilfFDe2EOQc98BmKApLfDpBpBxPjlnYNOtr5N9Ya6/ymuhAOH5Z1oBuKGj4EZXOfQpl3LZmZnFDPWqf3AXi+IgNIZwPdmrCYlga+a55BO1evWp8sJm0A/OKyJCcFbs+URtHmN/jg6pi0cSLaNKQGedHvlLz4Cqw9FYoKWhawF099Ry/QAhpNi11LDAomLN8wP4tzsdxG4bn6ImO9zvmKnHJaBua3YX1vyZRdt2tdkrf7yTTWaW2+dHEuQi3D9ZLdZaxufuuZGYJLsqpCcf5OhucdqVgLzjx4RURx3qxs4fOkSX2bPGKMZYiD4EbrLwCog4rZmYcFK+3ahwzHLi98T9NdpxcRQNQaqBeEXpwAE151S/XlQZRz8GqCh+j5jVqK9Myfoggad6fcDNfDuOB8e8ty0mMUH3qXx1zbJVRfRBrHLqTg9/T/PhSZE2nSNSOxsXpLyw1uL3v5e1+fKjEU2i4R3h8DhDxB7Yc/phHl6WLv+xFSPxNKQjiBdxWXoNpCYRF0="
+install:
+  - mkdir -p ~/bin
+  - export export PATH="$HOME/bin/:$PATH"
+  - curl -fSL https://github.com/haya14busa/reviewdog/releases/download/0.9.11/reviewdog_linux_amd64 -o ~/bin/reviewdog
+  - chmod +x ~/bin/reviewdog
+  - rustup component add clippy-preview
+  - cargo install --git https://github.com/qnighy/clippy-reviewdog-filter.git --rev 1269cea
+script:
+  - ./bin/reviewdog -reporter=github-pr-review
+  - cargo test --locked --all
